@@ -118,7 +118,10 @@ def read_images_from_disk(input_queue, input_size, random_scale, random_mirror, 
     # Extract mean.
     img -= img_mean
 
-    label = tf.image.decode_png(label_contents, channels=1)
+    # TODO : change here! / I am not gonna save label as png file.
+    label = np.load(label_contents)
+    label = tf.constant(label, dtype=tf.uint8)
+    # label = tf.image.decode_png(label_contents, channels=1)
 
     if input_size is not None:
         h, w = input_size
