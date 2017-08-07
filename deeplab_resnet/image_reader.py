@@ -119,8 +119,8 @@ def read_images_from_disk(input_queue, input_size, random_scale, random_mirror, 
     img -= img_mean
 
     # TODO : change here! / I am not gonna save label as png file.
-    label = np.load(label_contents)
-    label = tf.constant(label, dtype=tf.uint8)
+    label = tf.decode_raw(label_contents, tf.uint8)
+    label.set_shape(img.get_shape()[0], img.get_shape()[1])
     # label = tf.image.decode_png(label_contents, channels=1)
 
     if input_size is not None:
