@@ -226,10 +226,17 @@ def main():
     saver = tf.train.Saver(var_list=tf.global_variables(), max_to_keep=10)
     
     # Load variables if the checkpoint is provided.
-    if args.restore_from is not None:
-        loader = tf.train.Saver(var_list=restore_var)
-        load(loader, sess, args.restore_from)
-    
+    # if args.restore_from is not None:
+    #     loader = tf.train.Saver(var_list=restore_var)
+    #     load(loader, sess, args.restore_from)
+
+    # TODO : load model from ckpt directory
+    ckpt = tf.train.get_checkpoint_state('./snapshots/')
+    ckpt_name = os.path.basename(ckpt.model_checkpoint_path)
+    fname = os.path.join('./snapshots', ckpt_name)
+    saver.restore(sess, fname)
+    print(" [*] Load SUCCESS: %s" % fname)
+
     # Start queue threads.
     threads = tf.train.start_queue_runners(coord=coord, sess=sess)
 
