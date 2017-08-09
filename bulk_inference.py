@@ -71,6 +71,7 @@ def main():
     shapes = []
     print("Loading...")
     for fname in listdir(args.img_path):
+        print(fname)
         # Prepare image.
         if fname.split('.')[1] in ('jpg', 'jpeg', 'JPG'):
             img = tf.image.decode_jpeg(tf.read_file(args.img_path + fname), channels=3)
@@ -81,7 +82,7 @@ def main():
         img = tf.cast(tf.concat(axis=2, values=[img_b, img_g, img_r]), dtype=tf.float32)
         # Extract mean.
         img -= IMG_MEAN
-        shapes.append((int(img.get_shape[0]), int(img.get_shape[1])))
+        shapes.append((int(img.get_shape()[0]), int(img.get_shape()[1])))
         img = tf.image.resize_bilinear(img, (target_resize_length, target_resize_length))
         if imgs is None:
             imgs = tf.expand_dims(img, 0)
