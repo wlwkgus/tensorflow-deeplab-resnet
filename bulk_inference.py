@@ -129,8 +129,8 @@ def main():
         output = raw_outputs[i]
         shape = shapes[i]
         output_up = imresize(output, shape)
-        output_up = np.argmax(output_up, 3)
-        pred = np.expand_dims(output_up, 3)
+        output_up = np.argmax(output_up, 2)
+        pred = np.expand_dims(output_up, 2)
         pred = np.expand_dims(pred, 0)
         msk = decode_labels(pred, num_classes=args.num_classes)
         im = Image.fromarray(msk[0])
