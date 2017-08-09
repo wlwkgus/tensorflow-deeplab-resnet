@@ -126,11 +126,12 @@ def main():
 
     for i in range(len(raw_outputs)):
         print(i)
-        output = np.expand_dims(raw_outputs[i], 0)
+        output = raw_outputs[i]
         shape = shapes[i]
         output_up = imresize(output, shape)
         output_up = np.argmax(output_up, 3)
         pred = np.expand_dims(output_up, 3)
+        pred = np.expand_dims(pred, 0)
         msk = decode_labels(pred, num_classes=args.num_classes)
         im = Image.fromarray(msk[0])
         if not os.path.exists(args.save_dir):
