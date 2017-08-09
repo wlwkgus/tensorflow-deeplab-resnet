@@ -69,6 +69,7 @@ def main():
     target_resize_length = 640
     imgs = None
     shapes = []
+    print("Loading...")
     for fname in listdir(args.img_path):
         # Prepare image.
         if args.img_path.split('.')[1] in ('jpg', 'jpeg', 'JPG'):
@@ -87,6 +88,7 @@ def main():
         else:
             imgs = tf.concat([imgs, tf.expand_dims(img, 0)], 0)
 
+    print("Model Creating...")
 
     # Create network.
     net = DeepLabResNetModel({'data': imgs}, is_training=False, num_classes=args.num_classes)
