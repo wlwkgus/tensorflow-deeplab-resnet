@@ -18,9 +18,9 @@ import numpy as np
 
 from deeplab_resnet import DeepLabResNetModel, ImageReader, decode_labels, prepare_label
 
-IMG_MEAN = np.array((104.00698793,116.66876762,122.67891434), dtype=np.float32)
+IMG_MEAN = np.array((128.96269759, 122.2720388, 116.21071466), dtype=np.float32)
     
-NUM_CLASSES = 21
+NUM_CLASSES = 4
 SAVE_DIR = './output/'
 
 def get_arguments():
@@ -32,8 +32,8 @@ def get_arguments():
     parser = argparse.ArgumentParser(description="DeepLabLFOV Network Inference.")
     parser.add_argument("img_path", type=str,
                         help="Path to the RGB image file.")
-    parser.add_argument("model_weights", type=str,
-                        help="Path to the file with model weights.")
+    # parser.add_argument("model_weights", type=str,
+    #                     help="Path to the file with model weights.")
     parser.add_argument("--num-classes", type=int, default=NUM_CLASSES,
                         help="Number of classes to predict (including background).")
     parser.add_argument("--save-dir", type=str, default=SAVE_DIR,
@@ -86,7 +86,10 @@ def main():
     
     # Load weights.
     loader = tf.train.Saver(var_list=restore_var)
-    load(loader, sess, args.model_weights)
+    ckpt = tf.train.get_checkpoint_state('./snapshots/')
+    ckpt_name = os.path.basename(ckpt.model_checkpoint_path)
+    fname = os.path.join('./snapshots', ckpt_name)
+    load(loader, sess, fname)
     
     # Perform inference.
     preds = sess.run(pred)
