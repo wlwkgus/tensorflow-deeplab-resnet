@@ -70,10 +70,13 @@ def main():
     imgs = None
     shapes = []
     print("Loading...")
+    index = 0
     for fname in sorted(listdir(args.img_path)):
         print(fname)
         if fname.startswith('.'):
             continue
+        if index > 300:
+            break
         # Prepare image.
         if fname.split('.')[1] in ('jpg', 'jpeg', 'JPG'):
             img = tf.image.decode_jpeg(tf.read_file(args.img_path + fname), channels=3)
@@ -93,6 +96,7 @@ def main():
             imgs = img
         else:
             imgs = tf.concat([imgs, img], 0)
+        index += 1
 
     print("Model Creating...")
 
