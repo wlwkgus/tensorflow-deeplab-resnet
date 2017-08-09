@@ -72,7 +72,7 @@ def main():
     print("Loading...")
     for fname in listdir(args.img_path):
         # Prepare image.
-        if args.img_path.split('.')[1] in ('jpg', 'jpeg', 'JPG'):
+        if fname.split('.')[1] in ('jpg', 'jpeg', 'JPG'):
             img = tf.image.decode_jpeg(tf.read_file(args.img_path + fname), channels=3)
         else:
             img = tf.image.decode_png(tf.read_file(args.img_path + fname), channels=3)
