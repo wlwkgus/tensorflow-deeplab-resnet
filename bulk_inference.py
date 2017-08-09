@@ -86,11 +86,11 @@ def main():
         im = Image.open(args.img_path + fname)
         width, height = im.size
         shapes.append((height, width))
-        img = tf.image.resize_bilinear(img, (target_resize_length, target_resize_length))
+        img = tf.image.resize_bilinear(tf.expand_dims(img, 0), (target_resize_length, target_resize_length))
         if imgs is None:
-            imgs = tf.expand_dims(img, 0)
+            imgs = img
         else:
-            imgs = tf.concat([imgs, tf.expand_dims(img, 0)], 0)
+            imgs = tf.concat([imgs, img], 0)
 
     print("Model Creating...")
 
