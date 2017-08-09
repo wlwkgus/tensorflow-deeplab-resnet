@@ -75,7 +75,7 @@ def main():
         print(fname)
         if fname.startswith('.'):
             continue
-        if index > 100:
+        if index >= 50:
             break
         # Prepare image.
         if fname.split('.')[1] in ('jpg', 'jpeg', 'JPG'):
