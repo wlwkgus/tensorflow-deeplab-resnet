@@ -99,8 +99,10 @@ def main():
     if not os.path.exists(args.save_dir):
         os.makedirs(args.save_dir)
     im.save(args.save_dir + 'mask.png')
+    np.save(args.save_dir + 'raw_mask.npy', preds[0])
     
     print('The output file has been saved to {}'.format(args.save_dir + 'mask.png'))
+    print('The output file has been saved to {}'.format(args.save_dir + 'raw_mask.npy'))
 
     
 if __name__ == '__main__':
