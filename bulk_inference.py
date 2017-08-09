@@ -82,7 +82,10 @@ def main():
         img = tf.cast(tf.concat(axis=2, values=[img_b, img_g, img_r]), dtype=tf.float32)
         # Extract mean.
         img -= IMG_MEAN
-        shapes.append((int(img.get_shape()[0]), int(img.get_shape()[1])))
+        # Shape save.
+        im = Image.open(args.img_path + fname)
+        width, height = im.size
+        shapes.append((height, width))
         img = tf.image.resize_bilinear(img, (target_resize_length, target_resize_length))
         if imgs is None:
             imgs = tf.expand_dims(img, 0)
