@@ -74,7 +74,7 @@ def main():
     names = []
     print("Loading...")
     index = args.start_index
-    for fname in sorted(listdir(args.img_path)):
+    for fname in sorted(listdir(args.img_path))[index:]:
         print(fname)
         if fname.startswith('.'):
             continue
