@@ -40,6 +40,8 @@ def get_arguments():
     parser = argparse.ArgumentParser(description="DeepLabLFOV Network Inference.")
     parser.add_argument("img_path", type=str,
                         help="Path to the RGB image file.")
+    parser.add_argument("start_index", type=int,
+                        help="Index to start")
     # parser.add_argument("model_weights", type=str,
     #                     help="Path to the file with model weights.")
     parser.add_argument("--num-classes", type=int, default=NUM_CLASSES,
@@ -70,12 +72,12 @@ def main():
     imgs = None
     shapes = []
     print("Loading...")
-    index = 0
+    index = args.start_index
     for fname in sorted(listdir(args.img_path)):
         print(fname)
         if fname.startswith('.'):
             continue
-        if index >= 30:
+        if index >= args.start_index + 30:
             break
         # Prepare image.
         if fname.split('.')[1] in ('jpg', 'jpeg', 'JPG'):
