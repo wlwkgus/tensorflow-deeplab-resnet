@@ -76,8 +76,6 @@ def main():
     index = args.start_index
     for fname in sorted(listdir(args.img_path))[index:]:
         print(fname)
-        if fname.startswith('.'):
-            continue
         if index >= args.start_index + 30:
             break
         # Prepare image.
