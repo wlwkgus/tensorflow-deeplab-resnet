@@ -71,6 +71,7 @@ def main():
     target_resize_length = 320
     imgs = None
     shapes = []
+    names = []
     print("Loading...")
     index = args.start_index
     for fname in sorted(listdir(args.img_path)):
@@ -98,6 +99,7 @@ def main():
             imgs = img
         else:
             imgs = tf.concat([imgs, img], 0)
+        names.append(fname)
         index += 1
 
     print("Model Creating...")
@@ -136,6 +138,7 @@ def main():
         print(i)
         output = raw_outputs[i]
         shape = shapes[i]
+        name = names[i]
         output_up = imresize(output, shape)
         output_up = np.argmax(output_up, 2)
         pred = np.expand_dims(output_up, 2)
@@ -144,8 +147,8 @@ def main():
         im = Image.fromarray(msk[0])
         if not os.path.exists(args.save_dir):
             os.makedirs(args.save_dir)
-        im.save(args.save_dir + 'mask_{}.png'.format(num_to_str(i)))
-        np.save(args.save_dir + 'raw_mask_{}.npy'.format(num_to_str(i)), pred[0])
+        im.save(args.save_dir + 'mask_{}.png'.format(name.split('.')[0]))
+        np.save(args.save_dir + 'raw_mask_{}.npy'.format(name.split('.')[0]), pred[0])
 
         # print('The output file has been saved to {}'.format(args.save_dir + 'mask_{}.png'.format(num_to_str(i))))
         # print('The output file has been saved to {}'.format(args.save_dir + 'raw_mask_{}.npy'.format(num_to_str(i))))
