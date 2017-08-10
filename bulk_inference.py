@@ -66,7 +66,7 @@ def main():
     args = get_arguments()
 
     # For bulk inference, resize all images to 640
-    target_resize_length = 640
+    target_resize_length = 320
     imgs = None
     shapes = []
     print("Loading...")
@@ -75,7 +75,7 @@ def main():
         print(fname)
         if fname.startswith('.'):
             continue
-        if index >= 50:
+        if index >= 30:
             break
         # Prepare image.
         if fname.split('.')[1] in ('jpg', 'jpeg', 'JPG'):
